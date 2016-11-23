@@ -37,18 +37,18 @@
 }
 
 - (NSArray*)selectedSegmentTitles {
-	
+
 	__block NSMutableArray *titleArray = [[NSMutableArray alloc] initWithCapacity:[self.selectedSegmentIndexes count]];
-	
+
 	[self.selectedSegmentIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
 		//NSLog(@"segment index is selected: %d; text: %@", idx, [self titleForSegmentAtIndex:idx]);
-		
+
 		[titleArray addObject:[self titleForSegmentAtIndex:idx]];
-		
+
 	}];
-	
+
 	return [NSArray arrayWithArray:titleArray];
-	
+
 }
 
 - (void)setHideSeparatorBetweenSelectedSegments:(BOOL)hideSeparatorBetweenSelectedSegments
@@ -81,7 +81,11 @@
         [self.sortedSegments[i] setSelected:isSelected];
         if (i > 0) { // divide selected segments in flat UI by hiding builtin divider
             NSNumber *showBuiltinDivider = (isSelected && isPrevSelected && !self.hideSeparatorBetweenSelectedSegments) ? @0 : @1;
-            [self.sortedSegments[i-1] setValue:showBuiltinDivider forKey:@"showDivider"];
+            [((UIView*)self.sortedSegments[i-1]).subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull subview, NSUInteger idx, BOOL * _Nonnull stop) {
+              if ([subview isKindOfClass:UIImageView.class]) {
+                subview.alpha = showBuiltinDivider.floatValue;
+              }
+            }];
         }
         isPrevSelected = isSelected;
     }
