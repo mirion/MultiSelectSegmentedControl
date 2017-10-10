@@ -14,14 +14,14 @@
 @class MultiSelectSegmentedControl;
 
 @protocol MultiSelectSegmentedControlDelegate <NSObject>
--(void)multiSelect:(MultiSelectSegmentedControl*) multiSelecSegmendedControl didChangeValue:(BOOL) value atIndex: (NSUInteger) index;
+-(void)multiSelect:(nonnull MultiSelectSegmentedControl*) multiSelecSegmendedControl didChangeValue:(BOOL) value atIndex: (NSUInteger) index;
 @end
 
 @interface MultiSelectSegmentedControl : UISegmentedControl
 
-@property (nonatomic, assign) NSIndexSet *selectedSegmentIndexes;
-@property (nonatomic, weak) id<MultiSelectSegmentedControlDelegate> delegate;
-@property (nonatomic, readonly) NSArray *selectedSegmentTitles;
+@property (nonnull, nonatomic, assign) NSIndexSet *selectedSegmentIndexes;
+@property (nullable, nonatomic, weak) id<MultiSelectSegmentedControlDelegate> delegate;
+@property (nonnull, nonatomic, readonly) NSArray<NSString*> *selectedSegmentTitles;
 @property (nonatomic, assign) BOOL hideSeparatorBetweenSelectedSegments;
 
 - (void)selectAllSegments:(BOOL)select; // pass NO to deselect all
