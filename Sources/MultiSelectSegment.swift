@@ -138,8 +138,8 @@ public class MultiSelectSegment: UIView {
 
     func updateColors() {
         let realSelectedBackgroundColor = parent?.selectedBackgroundColor ?? actualTintColor
-        backgroundColor = isSelected ? realSelectedBackgroundColor : .clear
-        let foregroundColor: UIColor = isSelected ? parent?.backgroundBehind ?? .background : actualTintColor
+        backgroundColor = isSelected ? (parent?.titleTextAttributes[UIControl.State.selected.rawValue]?[ NSAttributedString.Key.backgroundColor ] as? UIColor) ?? realSelectedBackgroundColor : .clear
+        let foregroundColor: UIColor = isSelected ? (parent?.titleTextAttributes[UIControl.State.selected.rawValue]?[ NSAttributedString.Key.foregroundColor ] as? UIColor) ?? parent?.backgroundBehind ?? .background : actualTintColor
         for contentView in stackView.arrangedSubviews {
             if let label = contentView as? UILabel {
                 label.textColor = foregroundColor
@@ -160,7 +160,7 @@ public class MultiSelectSegment: UIView {
             if isSelected {
                 attributes.merge(titleTextAttributes[UIControl.State.selected.rawValue] ?? [:]) { _, new in new }
             }
-            label.attributedText = NSAttributedString(string: text, attributes: attributes)
+            label.attributedText = NSAttributedString(string: text, attributes: attributes.isEmpty ? nil : attributes)
         }
     }
 }
