@@ -153,12 +153,12 @@ public class MultiSelectSegment: UIView {
         guard let titleTextAttributes = parent?.titleTextAttributes, !titleTextAttributes.isEmpty else { return }
         for label in stackView.arrangedSubviews.compactMap({ $0 as? UILabel }) {
             guard let text = label.text else { continue }
-            var attributes = titleTextAttributes[.normal] ?? [:]
+            var attributes = titleTextAttributes[UIControl.State.normal.rawValue] ?? [:]
             if !isEnabled {
-                attributes.merge(titleTextAttributes[.disabled] ?? [:]) { _, new in new }
+                attributes.merge(titleTextAttributes[UIControl.State.disabled.rawValue] ?? [:]) { _, new in new }
             }
             if isSelected {
-                attributes.merge(titleTextAttributes[.selected] ?? [:]) { _, new in new }
+                attributes.merge(titleTextAttributes[UIControl.State.selected.rawValue] ?? [:]) { _, new in new }
             }
             label.attributedText = NSAttributedString(string: text, attributes: attributes)
         }
@@ -180,7 +180,7 @@ extension UILabel {
 extension UIColor {
     class var background: UIColor {
         if #available(iOS 13, *) {
-            return .systemBackground
+            return UIColor.white
         } else {
             return .white
         }

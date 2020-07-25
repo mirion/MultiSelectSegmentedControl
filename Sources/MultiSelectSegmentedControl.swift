@@ -130,7 +130,7 @@ import UIKit
         }
     }
 
-    public dynamic var titleTextAttributes: [UIControl.State: [NSAttributedString.Key: Any]] = [:] {
+    @objc public dynamic var titleTextAttributes: [UIControl.State.RawValue: [NSAttributedString.Key: Any]] = [:] {
         didSet {
             segments.forEach { $0.updateTitleAttributes() }
         }
@@ -192,11 +192,11 @@ import UIKit
     }
 
     @objc public func setTitleTextAttributes(_ attributes: [NSAttributedString.Key: Any]?, for state: UIControl.State) {
-        titleTextAttributes[state] = attributes
+        titleTextAttributes[state.rawValue] = attributes
     }
 
     @objc public func titleTextAttributes(for state: UIControl.State) -> [NSAttributedString.Key: Any]? {
-        return titleTextAttributes[state]
+        return titleTextAttributes[state.rawValue]
     }
 
     @objc public func insertSegment(with image: UIImage, at index: Int = UISegmentedControl.noSegment, animated: Bool = false) {
@@ -380,4 +380,4 @@ extension UIView {
     }
 }
 
-extension UIControl.State: Hashable {}
+//extension UIControl.State: Hashable {}
